@@ -7,7 +7,7 @@ and their responses are quoted verbatim. Status as of 2026-06-09.
 |---|---|---|
 | lean-ctx (yvgude) | [#361](https://github.com/yvgude/lean-ctx/issues/361) | **YES — substantive, 2026-06-09; confirmed + shipped fixes** |
 | rtk | [#2292](https://github.com/rtk-ai/rtk/issues/2292) | No human response yet; **results comment posted 2026-06-09** ([link](https://github.com/rtk-ai/rtk/issues/2292#issuecomment-4659710608)) |
-| headroom | [#645](https://github.com/chopratejas/headroom/issues/645) | No response yet; **results comment posted 2026-06-09** ([link](https://github.com/chopratejas/headroom/issues/645#issuecomment-4659710742)) |
+| headroom | [#645](https://github.com/chopratejas/headroom/issues/645) | **YES — maintainer (chopratejas) replied 2026-06-10; requests hold-back + accepts PR** ([link](https://github.com/chopratejas/headroom/issues/645#issuecomment-4666881746)) |
 
 ---
 
@@ -72,6 +72,28 @@ call.
 
 ## rtk / headroom
 
-**Results right-of-reply comments posted 2026-06-09** (links in the table above), awaiting maintainer reply before the 17th.
-- **rtk:** worked as designed (47–79 cmds/run, 64–76% on touched); +30.1% median is run-path variance, not rtk cost (no context-injection mechanism; floor run sits at native); ~1–2.5% addressable surface (forge spend is file reads + MCP store, neither a Bash command rtk rewrites). Asked to confirm "can't add tokens," and whether new base commands can be auto-registered without recompiling.
+**Results right-of-reply comments posted 2026-06-09** (links in the table above).
+- **rtk:** worked as designed (47–79 cmds/run, 64–76% on touched); +30.1% median is run-path variance, not rtk cost (no context-injection mechanism; floor run sits at native); ~1–2.5% addressable surface (forge spend is file reads + MCP store, neither a Bash command rtk rewrites). Asked to confirm "can't add tokens," and whether new base commands can be auto-registered without recompiling. **No human response yet.**
 - **headroom:** only product with ledger-exact on-wire compression (−147–238K/run; R03/R10 reconcile exactly, R08 `total_tokens_before` off ~309K); +17.8% median lands inside the band — within-run vs between-arm + n=3 variance swamps the ~7%; turn-inflation signal (lowest tok/turn yet most turns → lossy-compression-induces-re-fetch hypothesis); cache-stabilization suite structurally invisible on our no-cache rail, so the study likely understates headroom on a cache-priced rail. Asked to confirm the framing, the turn hypothesis, and the R08 meter discrepancy.
+
+---
+
+## headroom — chopratejas (maintainer), 2026-06-10
+
+Replied to the second results comment ([#645 comment 4666881746](https://github.com/chopratejas/headroom/issues/645#issuecomment-4666881746)):
+
+> Hi @devasur
+> We would like to dig deeper into these results. we do not expect a higher number of turns. we do expect it only if headroom_retrieve is called.
+> We are currently working on multiple fixes - with 0.24 released yesterday, and some more fixes coming very soon - so would like you to hold back on the results - until we have had a chance to validate the environment and settings.
+> we would appreciate your patch offer if you can send us a PR.
+
+**Three actionable items:**
+
+1. **Hold-back request.** Maintainer asks us to delay publication (currently June 17) until they validate environment/settings; 0.24 shipped 2026-06-09, more fixes imminent. → **Publication-timeline decision for Boni.** Note our own data (replication note #2, comment 4666836798) already showed the compression-only v0.24.0 variant did *not* cut turns (zero retrieve calls, 196 turns, billed 2.35M/2.93M bracketing stock-a2) — so the maintainer's "turns only inflate if headroom_retrieve is called" expectation is *contradicted by our v0.24 data*. That tension is exactly what they want to validate.
+2. **Turn-count disagreement.** Maintainer's mental model: turns inflate *only* when `headroom_retrieve` fires. Our isolation run shows turns elevated with zero retrieves. Either a faithful-integration gap on their side or path variance on ours — this is the open technical thread.
+3. **PR accepted.** They want the compression-only-flags PR we offered (`--no-ccr-inject-tool` / `--no-ccr-marker` / `--no-ccr-proactive-expansion`, defaults unchanged, + test). → **Deliverable to send.**
+
+### Significance for the writeup
+
+- Third maintainer to engage; second to accept a code contribution back (after lean-ctx's shipped fixes). Strengthens the "benchmark improves the products" beat.
+- The hold-back request is the first time a vendor has asked us to delay — how we handle it (transparent, protocol-bound) is itself part of the methodology story.
