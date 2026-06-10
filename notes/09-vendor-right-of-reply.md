@@ -97,3 +97,9 @@ Replied to the second results comment ([#645 comment 4666881746](https://github.
 
 - Third maintainer to engage; second to accept a code contribution back (after lean-ctx's shipped fixes). Strengthens the "benchmark improves the products" beat.
 - The hold-back request is the first time a vendor has asked us to delay — how we handle it (transparent, protocol-bound) is itself part of the methodology story.
+
+### Actions taken 2026-06-10
+
+1. **PR opened** — [chopratejas/headroom#823](https://github.com/chopratejas/headroom/pull/823): `feat(proxy): add CLI opt-outs for CCR injection (compression-only mode)`. Three opt-in `--no-ccr-inject-tool` / `--no-ccr-marker` / `--no-ccr-proactive-expansion` flags (+ env vars), defaults unchanged; adds `ccr_inject_marker` to `ProxyConfig` threaded into `ContentRouterConfig`; 4 CLI tests + ruff-clean + real-behavior-proof. Replaces the a2c image patch (`bench/docker/arm-a2c/headroom-noccr.Dockerfile`) with first-class flags. Branch `feat/proxy-compression-only-flags` on fork `devasur/headroom`.
+2. **Reply posted** — [#645 comment 4672917363](https://github.com/chopratejas/headroom/issues/645#issuecomment-4672917363). **Decision: June 17 stays firm** (pre-registered frozen protocol); offered verbatim right-of-reply + explicit caveat that 0.24/later fixes landed *after* the run window, and an offer to link any newer-build results they share. Surfaced the turn-count data point (compression-only v0.24.0 run: zero retrieves, 196 turns, 2.35M/2.93M billed — extra turns are NOT the failed retrieves) as the thing for them to validate.
+3. **Awaiting** — maintainer review of #823 + any response on the turn-count question.
