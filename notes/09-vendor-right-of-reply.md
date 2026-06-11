@@ -111,3 +111,12 @@ Reviewer **JerrettDavis** asked for project checks green before merge review (ma
 - `ci-precheck-python` curated suite + CLI/proxy test files: **209 passed, 4 skipped**.
 - Not reproduced locally: the 4-shard `pytest tests scripts/tests` matrix (needs their CI runner / model downloads) — flagged in the comment, offered to run specific shards.
 - Reviewer's stated review focus once green: default-on compatibility + `--no-*` flag/env naming (both covered by the 4 new `TestCLICompressionOnlyFlags` tests).
+
+### Update 2026-06-11 — PR #823 MERGED ✅
+
+Merged into `chopratejas/headroom:main` at 2026-06-11 02:08 UTC by **JerrettDavis** (merge commit `693d9d20e2b2d9bfce3a0c48314850ee77ff8af3`), ~13 min after the local-checks comment. The three compression-only flags (`--no-ccr-inject-tool` / `--no-ccr-marker` / `--no-ccr-proactive-expansion`, + env vars) are now in headroom mainline.
+
+**Significance for the writeup:**
+- **Second product to merge a benchmark-originated code change** (after lean-ctx's shipped fixes) — strongest version of the "benchmark improves the products" beat: not just acknowledged, merged.
+- A faithful compression-only eval no longer needs the a2c image patch (`bench/docker/arm-a2c/headroom-noccr.Dockerfile`) — it's now an official CLI flag. Any replication run can use the flags directly. The frozen 14-run matrix is unaffected (used v0.23.0; flags landed post-freeze, as the right-of-reply states).
+- Open thread still standing: the turn-inflation question (compression-only run had zero retrieves yet elevated turns) — maintainer wanted to validate; no technical response on it yet.
