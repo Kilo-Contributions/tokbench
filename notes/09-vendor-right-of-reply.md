@@ -97,7 +97,7 @@ Rationale to use in the writeup: forge-cli is the **harness** (neutral infra, ap
 
 [#2292 comment 4691189331](https://github.com/rtk-ai/rtk/issues/2292#issuecomment-4691189331). Conceded cache + variance, corrected the two misreads (per-turn cost, task surface = our own findings), held the line on "independent" with the harness-vs-product + held-constant-forge-compress argument, foregrounded the **n=3-per-arm + median protocol** as the direct answer to his own observed variance. Offered Discord walk-through of any single run + verbatim right-of-reply.
 
-**Open:** flagged to Boni that the forge-compress claim ("only touches forge's own artifacts, uniform across arms") is asserted, not yet re-verified against harness config — verify before publication so it's not a factual handle.
+**Confirmed by author (Boni, 2026-06-12):** forge-compress is invoked only by `store-cli` and `forge-artifact` — both forge's own store-artifact paths. It never touches an arm's general workload and is held constant across every arm (native incl.). The "uniform across arms / no relative advantage" rebuttal is factually accurate, not just asserted.
 - **headroom:** only product with ledger-exact on-wire compression (−147–238K/run; R03/R10 reconcile exactly, R08 `total_tokens_before` off ~309K); +17.8% median lands inside the band — within-run vs between-arm + n=3 variance swamps the ~7%; turn-inflation signal (lowest tok/turn yet most turns → lossy-compression-induces-re-fetch hypothesis); cache-stabilization suite structurally invisible on our no-cache rail, so the study likely understates headroom on a cache-priced rail. Asked to confirm the framing, the turn hypothesis, and the R08 meter discrepancy.
 
 ---
