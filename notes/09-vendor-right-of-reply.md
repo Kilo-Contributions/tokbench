@@ -6,7 +6,7 @@ and their responses are quoted verbatim. Status as of 2026-06-09.
 | Vendor | Issue | Responded? |
 |---|---|---|
 | lean-ctx (yvgude) | [#361](https://github.com/yvgude/lean-ctx/issues/361) | **YES — substantive, 2026-06-09; confirmed + shipped fixes** |
-| rtk | [#2292](https://github.com/rtk-ai/rtk/issues/2292) | No human response yet; **results comment posted 2026-06-09** ([link](https://github.com/rtk-ai/rtk/issues/2292#issuecomment-4659710608)) |
+| rtk | [#2292](https://github.com/rtk-ai/rtk/issues/2292) | **YES — aeppling (CONTRIBUTOR) replied 2026-06-12; replied back same day** ([link](https://github.com/rtk-ai/rtk/issues/2292#issuecomment-4688590199)) |
 | headroom | [#645](https://github.com/chopratejas/headroom/issues/645) | **YES — maintainer (chopratejas) replied 2026-06-10; requests hold-back + accepts PR** ([link](https://github.com/chopratejas/headroom/issues/645#issuecomment-4666881746)) |
 
 ---
@@ -73,7 +73,31 @@ call.
 ## rtk / headroom
 
 **Results right-of-reply comments posted 2026-06-09** (links in the table above).
-- **rtk:** worked as designed (47–79 cmds/run, 64–76% on touched); +30.1% median is run-path variance, not rtk cost (no context-injection mechanism; floor run sits at native); ~1–2.5% addressable surface (forge spend is file reads + MCP store, neither a Bash command rtk rewrites). Asked to confirm "can't add tokens," and whether new base commands can be auto-registered without recompiling. **No human response yet.**
+- **rtk:** worked as designed (47–79 cmds/run, 64–76% on touched); +30.1% median is run-path variance, not rtk cost (no context-injection mechanism; floor run sits at native); ~1–2.5% addressable surface (forge spend is file reads + MCP store, neither a Bash command rtk rewrites). Asked to confirm "can't add tokens," and whether new base commands can be auto-registered without recompiling.
+- **headroom:** only product with ledger-exact on-wire compression (−147–238K/run; R03/R10 reconcile exactly, R08 `total_tokens_before` off ~309K); +17.8% median lands inside the band — within-run vs between-arm + n=3 variance swamps the ~7%; turn-inflation signal (lowest tok/turn yet most turns → lossy-compression-induces-re-fetch hypothesis); cache-stabilization suite structurally invisible on our no-cache rail, so the study likely understates headroom on a cache-priced rail. Asked to confirm the framing, the turn hypothesis, and the R08 meter discrepancy.
+
+---
+
+## rtk — aeppling (CONTRIBUTOR), 2026-06-12
+
+Replied to our results comment ([#2292 comment 4688590199](https://github.com/rtk-ai/rtk/issues/2292#issuecomment-4688590199)). Tone somewhat pointed ("weird," "shady," "remove independent"), but most substance either **agrees with us** or is **already scoped in our materials**:
+
+1. **"rtk adding token per turn is not possible"** — that IS our read; we never claimed per-turn cost. Misread of our comment.
+2. **"weird" input-token variance / per-cost** — addressed by n=3 + median protocol; he himself observes huge variance across 20 native-only sessions.
+3. **Cache** — insists on a cache-priced API; our non-caching ollama-cloud rail is deliberate (isolates mechanism, harder setting for the products). Already scoped.
+4. **Task surface** — "don't benchmark rtk on edit/write, only dev commands." That IS our addressable-surface finding (~2.5% bash output here); we don't rank products on a shared task.
+5. **Internal benchmark** — not yet published; we offered to link it + quote his response verbatim.
+6. **"Remove independent — you build forge/forge-compress, that's shady"** — the one real hit; cross-cuts the whole publication, not just rtk.
+
+### Boni decision (2026-06-12): keep "independent"
+
+Rationale to use in the writeup: forge-cli is the **harness** (neutral infra, applied identically to every arm incl. native — not a benchmarked product); forge-compress only compresses forge's **own store artifacts**, uniformly across all arms (held constant, gives no arm relative advantage); conflict is disclosed (issue + README); "independent" = no vendor funded/commissioned/approved it. Data backing this is public — invited him to check.
+
+### Reply posted 2026-06-12
+
+[#2292 comment 4691189331](https://github.com/rtk-ai/rtk/issues/2292#issuecomment-4691189331). Conceded cache + variance, corrected the two misreads (per-turn cost, task surface = our own findings), held the line on "independent" with the harness-vs-product + held-constant-forge-compress argument, foregrounded the **n=3-per-arm + median protocol** as the direct answer to his own observed variance. Offered Discord walk-through of any single run + verbatim right-of-reply.
+
+**Open:** flagged to Boni that the forge-compress claim ("only touches forge's own artifacts, uniform across arms") is asserted, not yet re-verified against harness config — verify before publication so it's not a factual handle.
 - **headroom:** only product with ledger-exact on-wire compression (−147–238K/run; R03/R10 reconcile exactly, R08 `total_tokens_before` off ~309K); +17.8% median lands inside the band — within-run vs between-arm + n=3 variance swamps the ~7%; turn-inflation signal (lowest tok/turn yet most turns → lossy-compression-induces-re-fetch hypothesis); cache-stabilization suite structurally invisible on our no-cache rail, so the study likely understates headroom on a cache-priced rail. Asked to confirm the framing, the turn hypothesis, and the R08 meter discrepancy.
 
 ---
