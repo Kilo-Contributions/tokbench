@@ -144,3 +144,23 @@ Merged into `chopratejas/headroom:main` at 2026-06-11 02:08 UTC by **JerrettDavi
 - **Second product to merge a benchmark-originated code change** (after lean-ctx's shipped fixes) — strongest version of the "benchmark improves the products" beat: not just acknowledged, merged.
 - A faithful compression-only eval no longer needs the a2c image patch (`bench/docker/arm-a2c/headroom-noccr.Dockerfile`) — it's now an official CLI flag. Any replication run can use the flags directly. The frozen 14-run matrix is unaffected (used v0.23.0; flags landed post-freeze, as the right-of-reply states).
 - Open thread still standing: the turn-inflation question (compression-only run had zero retrieves yet elevated turns) — maintainer wanted to validate; no technical response on it yet.
+
+---
+
+## lean-ctx — yvgude (OWNER), 2026-06-15 (v2 design + integration-PR offer)
+
+[#361 comment 4706844845](https://github.com/yvgude/lean-ctx/issues/361#issuecomment-4706844845).
+In for v2/R2. Endorses the GIT-BUG-003 capability framing ("on a fix task cost is turns × rate,
+so what matters is whether a context layer helps **localise** the defect — and whether it ever
+compresses the bug-relevant cell **away**"). Two design asks: (1) include a cache-priced rail
+[already = v2]; (2) add a warm-session/long-lived arm [DEFERRED]. Offers the lean-ctx
+integration as a **PR** ("installed = running as designed"): pi shell-routing fix
+(R1 logged 102 native bash / 0 ctx_shell — the heaviest fix-task payload never reached the
+compressor; fix is lossless for signal), faithful config (`rules_injection=off` + minimal
+profile + `structure_first` cold-read bias, capability-safe), meter net-of-injection.
+
+**Our handling:** accept the PR (faithful, fixes the 0-ctx_shell trap; lean-ctx analogue of
+headroom #823) BUT pin the arm to a **public released version** + disclose vendor-supplied
+config. See notes/11 "Update 2026-06-15" for the moving-target guardrail — lean-ctx shipped
+**8 npm releases in 9 days** (3.7.3→3.8.5) clustered around our filings; benchmark-responsive
+velocity is both the "improves the product" beat and a real external-validity risk to disclose.
