@@ -71,10 +71,15 @@ pre-registered protocol.
 
 ## 4. Fairness & disclosure (the feather-roughening insurance)
 
-- [ ] **COI statement:** harness (forge-cli/4ge) and testbench are the author's own
-  products; author is a daily lean-ctx user. The harness choice is itself part of the
-  finding (context-frugal harness = small addressable surface) and must be framed as
-  scope, not hidden.
+- [ ] **Harness-as-invariant / motivation statement** (replaces the old COI framing):
+  forge (forge-cli/4ge) is the author's own product and is the FIXED element of the
+  experiment — held constant in every run, the only thing swapped is the middleware.
+  That is not a conflict to bury; it is the REASON the test exists: we run forge, we pay
+  its token bill, and we needed billing-grade evidence to decide whether forge needs an
+  external token/context manager at all. Frame the ownership as premise + scope, not as
+  bias. (Do NOT mention "author is a lean-ctx user" — lean-ctx is a free tool; using it
+  is not a COI and only muddles the story.) The harness being context-frugal is itself
+  part of the finding (lean harness = small addressable surface).
 - [ ] **Scope statement:** one harness, one provider (no cache economics), one small
   codebase, interactive operator protocol. Claims scoped: "on this harness" — explicitly
   NOT "these products don't work" (rtk demonstrably worked; surface was small).
